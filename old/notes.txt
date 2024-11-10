@@ -1,0 +1,14 @@
+Transactie
+    Inkomst
+    Uitgave
+        Categorie
+            Aankoop of betaling
+            Lening
+        Tags
+            Benzine/Motor/Vakantie/etc.
+        Status
+            Voltooid
+            Geretourneerd of geannuleerd
+
+
+Pocketbase negate SSL error: export NODE_TLS_REJECT_UNAUTHORIZED=0 
