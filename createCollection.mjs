@@ -207,11 +207,8 @@ async function createCollection() {
         },
         {
             name: 'VERWERKT',
-            type: 'text',
+            type: 'bool',
             required: false,
-            options: {
-                min: 0,
-            },
         },
         {
             name: 'LOCALHOST_TRANSACTION',

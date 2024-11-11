@@ -8,7 +8,7 @@
   let currentIndex = 0;
   let selectedTransaction = null;
 
-  const pocketbaseUrl = "https://pocketbase.home.nl/api/collections/transactions/records";
+  const pocketbaseUrl = "https://pocketbase.home.nl/api/collections/transactions/records?filter=VERWERKT=false&perPage=9999";
 
   // Load JSON file and parse data
   const loadFile = () => {
@@ -56,8 +56,8 @@
   const loadMore = () => {
     transactions.subscribe(($transactions) => {
       if ($transactions.length > 0) {
-        visibleTransactions = [...visibleTransactions, ...$transactions.slice(currentIndex, currentIndex + 20)];
-        currentIndex += 20;
+        visibleTransactions = [...visibleTransactions, ...$transactions.slice(currentIndex, currentIndex + 20000)];
+        currentIndex += 20000;
         console.log("Visible Transactions:", visibleTransactions); // Debug: Check loaded transactions
       } else {
         console.log("No transactions to display"); // Confirm if data is empty
