@@ -55,7 +55,7 @@
       console.error("Error saving transaction:", error);
       alert("Failed to save transaction.");
     }
-  };
+  }; 
 
   // Close notification manually
   const closeNotification = () => {
