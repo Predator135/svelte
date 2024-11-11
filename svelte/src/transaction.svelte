@@ -24,17 +24,30 @@
     {#each Object.entries(transaction) as [key, value]}
       <div class="field">
         <label for={key}>{key}:</label>
-        <input
-          id={key}
-          type="text"
-          bind:value={transaction[key]}
-          on:change={() => updateTransaction(key, transaction[key])}
-        />
+        {#if typeof value === 'boolean'}
+          <!-- Wrap the checkbox switch for left alignment -->
+          <div class="checkbox-container">
+            <input
+              id={key}
+              type="checkbox"
+              bind:checked={transaction[key]}
+              on:change={() => updateTransaction(key, transaction[key])}
+            />
+          </div>
+        {:else}
+          <!-- Other fields use a text input -->
+          <input
+            id={key}
+            type="text"
+            bind:value={transaction[key]}
+            on:change={() => updateTransaction(key, transaction[key])}
+          />
+        {/if}
       </div>
     {/each}
   
     <div class="add-metadata">
-      <h4>Add New Metadata</h4>
+      <!-- <p>Add New Metadata</p> -->
       <input type="text" bind:value={newKey} placeholder="New key" />
       <input type="text" bind:value={newValue} placeholder="New value" />
       <button on:click={addMetadata}>Add</button>
@@ -43,77 +56,106 @@
   
   <style>
     .transaction-details {
-      padding: 4rem;
-      margin-right: 1.2rem;
+      padding: 1rem;
       border-radius: 5px;
-      background-color: #f2f2f2; /* Light gray background for better contrast */
-      border: 1px solid #bbb;    /* Darker border for definition */
-      color: #222;               /* Dark text for better readability */
-    }
-  
-    h3 {
-      color: #333;
+      background-color: white;
     }
   
     .field {
-      margin-bottom: 0.75rem;
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap; /* Allow wrapping if necessary */
     }
   
     .field label {
       font-weight: bold;
-      color: #555;             /* Darker color for label text */
-      margin-bottom: 0.25rem;
+      color: #555;
+      margin-right: 1rem;
+      flex: 1 0 150px; /* Allows the label to take at least 150px but grow */
+      text-align: left;
     }
   
-    .field input {
+    .field input[type="text"] {
+      flex: 2 1 200px; /* Allows input to take more space but remain flexible */
       padding: 0.5rem;
-      border: 1px solid #888;   /* Darker border for input */
+      border: 1px solid #ccc;
       border-radius: 3px;
-      background-color: #ffffff; /* White background for inputs */
-      color: #222;               /* Dark text color */
+      background-color: #ffffff;
+      color: #333;
     }
   
-    .field input:focus {
-      border-color: #555;        /* Darker border color on focus */
+    .field input[type="text"]:focus {
+      border-color: #888;
       outline: none;
+    }
+  
+    /* Align checkbox to the left by wrapping in a container */
+    .checkbox-container {
+      flex: 1 0 auto;
+      display: flex;
+      align-items: center;
+      margin-left: 0; /* Aligns it close to the label */
+    }
+  
+    /* Toggle switch styling */
+    .field input[type="checkbox"] {
+      position: relative;
+      width: 50px;
+      height: 24px;
+      appearance: none;
+      background: #ddd;
+      outline: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+  
+    .field input[type="checkbox"]:checked {
+      background: #4caf50;
+    }
+  
+    .field input[type="checkbox"]::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #fff;
+      transition: 0.3s;
+    }
+  
+    .field input[type="checkbox"]:checked::before {
+      left: 26px;
     }
   
     .add-metadata {
       margin-top: 1rem;
-      padding: 1rem;
-      border-radius: 5px;
-      background-color: #e6e6e6; /* Slightly darker gray background */
-      border: 1px solid #bbb;
-    }
-  
-    .add-metadata h4 {
-      margin-bottom: 0.5rem;
-      color: #333;               /* Dark heading color */
     }
   
     .add-metadata input {
       padding: 0.5rem;
-      border: 1px solid #888;
+      border: 1px solid #ccc;
       border-radius: 3px;
-      background-color: #ffffff; /* White input background */
-      color: #222;               /* Dark text color */
+      background-color: #ffffff;
+      color: #333;
       margin-right: 0.5rem;
       margin-bottom: 0.5rem;
     }
   
     .add-metadata button {
       padding: 0.5rem 1rem;
-      border: 1px solid #888;
+      border: 1px solid #ccc;
       border-radius: 3px;
-      background-color: #dcdcdc; /* Light gray button background */
-      color: #333;               /* Dark text for button */
+      background-color: #e0e0e0;
+      color: #333;
       cursor: pointer;
     }
   
     .add-metadata button:hover {
-      background-color: #c4c4c4; /* Darker gray on hover */
+      background-color: #d0d0d0;
     }
   </style>
   
